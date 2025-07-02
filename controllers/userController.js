@@ -67,12 +67,12 @@ exports.verifyOtp = async (req, res) => {
     mobile: record.mobile,
     password: hashedPassword,
     status: "Active",
+    role:"user",
   });
   await sendPasswordMail(email, record.name, randomPassword);
   otpStore.delete(email);
   res.status(201).json({ message: "User registered and password sent to email" });
 };
-// ---- 
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
@@ -84,11 +84,11 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid Credentials" });
 
-    const token = jwt.sign({ email: user.email, name: user.name,id:user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ email: user.email, name: user.name,id:user._id,role:user.role }, process.env.JWT_SECRET, {
       expiresIn: "1d",
       
     });
-    res.json({ token:token, user:{name:user.name,email:user.email,role:"user"} });
+    res.json({ token:token, user:{name:user.name,email:user.email,role:user.role} });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
