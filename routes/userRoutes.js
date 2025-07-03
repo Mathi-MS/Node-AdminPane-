@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { register, login,verifyOtp } = require("../controllers/userController");
+const { register, login,verifyOtp, changePassword } = require("../controllers/userController");
 const auth = require("../middleware/auth");
 const User = require("../models/User");
 
 router.post("/register", register);
 router.post("/login", login);
 router.post("/verify-otp", verifyOtp);
+router.post("/user/change-password", changePassword);
 
 // Protected routes
 router.get("/users", auth, async (req, res) => {

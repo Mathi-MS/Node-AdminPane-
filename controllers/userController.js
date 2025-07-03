@@ -88,7 +88,35 @@ exports.login = async (req, res) => {
       expiresIn: "1d",
       
     });
-    res.json({ token:token, user:{name:user.name,email:user.email,role:user.role} });
+    res.json({ token:token, user:{name:user.name,email:user.email,role:user.role,status:user.status} });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+
+exports.changePassword = async (req, res) => {
+  const { email, currentPassword, newPassword } = req.body;
+
+  if (!email || !currentPassword || !newPassword) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Current password is incorrect" });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedNewPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
