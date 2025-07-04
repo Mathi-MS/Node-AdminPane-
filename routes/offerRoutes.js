@@ -6,10 +6,11 @@ const {
   updateOffer,
   deleteOffer,
 } = require("../controllers/offerController");
+const auth = require("../middleware/auth");
 
-router.post("/offers", createOffer);        
-router.get("/offers", getOffers);    
-router.put("/offers/:id", updateOffer);  
-router.delete("/offers/:id", deleteOffer);  
+router.post("/offers",auth, createOffer);        
+router.get("/offers",auth, getOffers);    
+router.put("/offers/:id",auth, updateOffer);  
+router.delete("/offers/:id",auth, deleteOffer);  
 
 module.exports = router;
