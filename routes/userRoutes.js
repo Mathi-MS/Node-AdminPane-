@@ -3,7 +3,14 @@ const router = express.Router();
 const { register, login,verifyOtp, changePassword } = require("../controllers/userController");
 const auth = require("../middleware/auth");
 const User = require("../models/User");
-
+/**
+ * @swagger
+ * /api/register:
+ *   post:
+ *     summary: Create a new user
+ *     tags: 
+ *        - User
+ */
 router.post("/register", register);
 router.post("/login", login);
 router.post("/verify-otp", verifyOtp);
