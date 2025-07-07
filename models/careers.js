@@ -30,7 +30,7 @@ workType:{
     required:true,
 },
 noOfopening:{
-    type:Number,
+    type:String,
     required:true,
 },
 salaryRange:{
