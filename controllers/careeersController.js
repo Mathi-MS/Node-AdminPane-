@@ -140,3 +140,74 @@ exports.deleteCareers = async (req, res) => {
     });
   }
 };
+
+
+exports. getCareers = async (req,res)=>{
+  try{
+const allcareers=await careers.find();
+    res.status(200).json({
+      success: true,
+      message: "Careers fetched successfully",
+      data: allcareers
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error while fetching careers",
+      error: error.message
+    });
+  }
+};
+
+exports.updateCareersstatus = async (req, res) => {
+  try {
+    const updateStatusId = req.params.id;
+    const { status } = req.body;
+
+    if (!updateStatusId) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid ID",
+      });
+    }
+
+    if (status !== "Active" && status !== "InActive") {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid status: 'Active' or 'InActive'",
+      });
+    }
+
+    
+    const updatedStatus = await careers.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+    console.log("fghjkl",updatedStatus);
+    
+   
+    if (!updatedStatus) {
+      return res.status(404).json({
+        success: false,
+        message: "Career not found with the provided ID",
+      });
+    }
+
+   
+    res.status(200).json({
+      success: true,
+      message: "Career status updated successfully",
+      data: updatedStatus,
+    });
+
+  } catch (error) {
+    console.error("Error updating status:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
+;
