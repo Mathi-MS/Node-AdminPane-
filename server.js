@@ -13,6 +13,7 @@ const offerRoutes = require("./routes/offerRoutes");
 const careersRoutes = require("./routes/careersRoutes");
 const courseRoutes = require("./routes/courseRoutes");
 const lessonsRoutes = require("./routes/lesRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
 
 dotenv.config();
 connectDB();
@@ -30,6 +31,7 @@ app.use("/api", offerRoutes);
 app.use("/api", careersRoutes);
 app.use("/api", courseRoutes);
 app.use("/api", lessonsRoutes);
+app.use("/api", categoryRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
