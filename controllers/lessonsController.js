@@ -17,7 +17,7 @@ exports.createLessonsForCourse = async (req, res) => {
     }
     const existingLesson = await Lesson.findOne({ "courseId._id": course._id });
     if (existingLesson) {
-      return res.status(409).json({ message: 'Lessons already created for this course' });
+      return res.status(409).json({ message: 'Syllabus already created for this course' });
     }
     // Step 2: Save lesson content (with full course data inside)
     const lessonDoc = new Lesson({
@@ -26,7 +26,7 @@ exports.createLessonsForCourse = async (req, res) => {
     });
 
     const saved = await lessonDoc.save();
-    res.status(201).json({ message: 'Lessons created successfully', data: saved });
+    res.status(201).json({ message: 'Syllabus created successfully', data: saved });
 
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
@@ -50,7 +50,7 @@ exports.getLessonsById = async (req, res) => {
     const lesson = await Lesson.findById(lessonsId);
     
     if (!lesson) {
-      return res.status(404).json({ message: 'Lesson not found' });
+      return res.status(404).json({ message: 'Syllabus not found' });
     }
     
     res.json(lesson);
@@ -78,7 +78,7 @@ exports.updateLessons = async (req, res) => {
     // Step 2: Get the existing lesson document
     const lesson = await Lesson.findById(lessonsId);
     if (!lesson) {
-      return res.status(404).json({ message: 'Lesson not found' });
+      return res.status(404).json({ message: 'Syllabus not found' });
     }
 
     // Step 3: Update and save
@@ -86,7 +86,7 @@ exports.updateLessons = async (req, res) => {
     lesson.units = units;
     const updated = await lesson.save();
     console.log('Updated:', updated);
-    res.json({ message: 'Lessons updated', data: updated });
+    res.json({ message: 'Syllabus updated', data: updated });
 
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
@@ -101,10 +101,10 @@ exports.deleteLessons = async (req, res) => {
     const lesson = await Lesson.findByIdAndDelete(lessonsId);
     
     if (!lesson) {
-      return res.status(404).json({ message: 'Lesson not found' });
+      return res.status(404).json({ message: 'Syllabus not found' });
     }
     
-    res.json({ message: 'Lessons deleted' });
+    res.json({ message: 'Syllabus deleted' });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
@@ -130,14 +130,14 @@ exports.getAllLessonsByCourse = async (req, res) => {
     if (!lessons) {
       return res.status(200).json({
         success: true,
-        message: 'No lessons found for this course',
+        message: 'No Syllabus found for this course',
         data: []
       });
     }
 
     res.status(200).json({
       success: true,
-      message: 'Lessons retrieved successfully',
+      message: 'Syllabus retrieved successfully',
       data: lessons
     });
 
