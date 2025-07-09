@@ -1,4 +1,5 @@
 const Course = require("../models/Course");
+const Lesson = require('../models/lessons');
 const path = require("path");
 const fs = require("fs");
 
@@ -173,6 +174,7 @@ exports.deleteCourse = async (req, res) => {
         message: "Course not found" 
       });
     }
+    await Lesson.deleteMany({ "courseId._id": course._id });
 
     await Course.findByIdAndDelete(req.params.id);
     
