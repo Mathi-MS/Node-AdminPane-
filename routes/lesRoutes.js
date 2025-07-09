@@ -7,7 +7,8 @@ const {
   getAllLessons,
   getLessonsById,
   updateLessons,
-  deleteLessons
+  deleteLessons,
+  getAllLessonsByCourse,
 } = require('../controllers/lessonsController');
 
 // ✅ Apply auth middleware to all routes below
@@ -19,5 +20,6 @@ router.get('/lessons', getAllLessons);
 router.get('/lessons/:lessonsId', getLessonsById);
 router.put('/lessons/:lessonsId', updateLessons);
 router.delete('/lessons/:lessonsId', deleteLessons);
+router.get('/lessons/course/:courseId', getAllLessonsByCourse);
 
 module.exports = router;
