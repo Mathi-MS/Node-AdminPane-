@@ -15,7 +15,7 @@ const categorySchema = new mongoose.Schema({
   },
   mode: {
     type: String,
-    enum: ["online", "Offline"],
+    enum: ["online", "offline"],
     required: true
   },
   venue: {
