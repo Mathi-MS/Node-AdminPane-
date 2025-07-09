@@ -14,7 +14,10 @@ exports.createLessonsForCourse = async (req, res) => {
     if (!course) {
       return res.status(404).json({ message: 'Course not found' });
     }
-
+    const existingLesson = await Lesson.findOne({ "courseId._id": course._id });
+    if (existingLesson) {
+      return res.status(409).json({ message: 'Lessons already created for this course' });
+    }
     // Step 2: Save lesson content (with full course data inside)
     const lessonDoc = new Lesson({
       courseId: course, // embed full object
