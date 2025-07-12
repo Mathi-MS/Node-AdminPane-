@@ -43,7 +43,9 @@ const categorySchema = new mongoose.Schema({
   endTime: {
     type: String,
     required: true
-  }
+  },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
 });
 
 categorySchema.pre('save', function (next) {
