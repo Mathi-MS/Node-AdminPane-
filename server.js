@@ -16,6 +16,7 @@ const lessonsRoutes = require("./routes/lesRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
+const contactRoutes = require('./routes/contactRoutes');
 
 dotenv.config();
 connectDB();
@@ -36,6 +37,7 @@ app.use("/api", lessonsRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", dashboardRoutes);
 app.use("/api", reviewRoutes);
+app.use("/api", contactRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
